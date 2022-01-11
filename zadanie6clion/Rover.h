@@ -42,5 +42,8 @@ public:
 
     RoverBuilder& build();
 
+    //czy te dwa nie powinny być w Rover?
     void execute(std::string command);
+
+    void land(std::pair<coordinate_t, coordinate_t>, std::pair<coordinate_t, coordinate_t>);
 };
