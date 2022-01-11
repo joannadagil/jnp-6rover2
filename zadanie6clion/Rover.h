@@ -3,6 +3,8 @@
 #include "Actions.h"
 #include <memory>
 #include <vector>
+#include <map>
+#include <string>
 
 using coordinate_t = uint32_t;
 
@@ -21,10 +23,12 @@ class Sensor {
 class RoverBuilder;
 
 class Rover {
+    std::map<std::string, Action> commands;
+    
     Rover() = default;
 
 public:
-    friend class RoverBuilder;
+    friend class RoverBuilder; //to jest private na tej stronce
     static RoverBuilder create();
 };
 

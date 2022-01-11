@@ -1,5 +1,6 @@
 #pragma once
 #include <initializer_list>
+#include <vector>
 
 class Action {
     virtual void execute();
@@ -22,10 +23,12 @@ class RotateRightAction : public Action{
 };
 
 class ComposeAction : public Action{
-    ComposeAction(std::initializer_list<Action> list) {
-
+    std::vector<Action> actions;
+    ComposeAction(std::initializer_list<Action> list) : actions(list) {}
+    void execute() {
+        for(Action action : actions)
+            action.execute(); // hmmm, jakoś inaczej
     }
-    void execute() {}
 };
 
 MoveForwardAction move_forward() {
