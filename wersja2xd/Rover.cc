@@ -1,9 +1,8 @@
 #include "Rover.h"
 
 
-RoverBuilder& RoverBuilder::program_command(const char &id, const Action
-&action) {
-    rover.actions_map.insert(std::make_pair(std::move(id),std::move(action)));
+RoverBuilder& RoverBuilder::program_command(const char &id, Action* action) {
+    rover.actions_map.insert(std::make_pair(std::move(id),action));
     return *this;
 }
 
