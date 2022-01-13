@@ -5,7 +5,7 @@ using position_t = std::pair<coordinate_t, coordinate_t>;
 
 class Action {
 public:
-    virtual void execute(position_t &pos, position_t &dir) {}
+    virtual void execute(position_t &pos, position_t &dir) = 0;
     virtual ~Action() = default;
 };
 
@@ -26,8 +26,8 @@ public:
      ~MoveForwardAction() override = default;
 };
 
-static MoveForwardAction& move_forward() {
-    return MoveForwardAction::get_singleton();
+static MoveForwardAction* move_forward() {
+    return &MoveForwardAction::get_singleton();
 }
 
 class MoveBackwardAction : public Action {
@@ -47,8 +47,8 @@ public:
     ~MoveBackwardAction() override = default;
 };
 
-static MoveBackwardAction& move_backward() {
-    return MoveBackwardAction::get_singleton();
+static MoveBackwardAction* move_backward() {
+    return &MoveBackwardAction::get_singleton();
 }
 
 class RotateLeftAction : public Action {
@@ -56,8 +56,6 @@ private:
     RotateLeftAction() {}
 public:
     void execute(position_t &pos, position_t &dir) override {
-        std::cout << "chuj" << std::endl;
-        pos.first += 1000;
     }
 
     static RotateLeftAction& get_singleton() {
@@ -68,8 +66,8 @@ public:
     ~RotateLeftAction() override = default;
 };
 
-static RotateLeftAction& rotate_left() {
-    return RotateLeftAction::get_singleton();
+static RotateLeftAction* rotate_left() {
+    return &RotateLeftAction::get_singleton();
 }
 
 class RotateRightAction : public Action {
@@ -87,16 +85,20 @@ public:
     ~RotateRightAction() override = default;
 };
 
-static RotateRightAction& rotate_right() {
-    return RotateRightAction::get_singleton();
+static RotateRightAction* rotate_right() {
+    return &RotateRightAction::get_singleton();
 }
 
-class compose : public Action {
+class ComposeAction : public Action {
 private:
 
 public:
-    compose(std::initializer_list<Action> list) {}
+    ComposeAction(std::initializer_list<Action*> list) {}
     void execute(position_t &pos, position_t &dir) override {}
 
-    ~compose() override = default;
+    ~ComposeAction() override = default;
 };
+
+ComposeAction compose(std::initializer_list<Action*> list) {
+    return ComposeAction(list);
+}
