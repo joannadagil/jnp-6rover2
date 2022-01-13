@@ -27,7 +27,7 @@ class Rover {
 private:
     position_t pos;
     position_t dir;
-    std::unordered_map<char,Action> actions_map;
+    std::unordered_map<char,Action*> actions_map;
     bool landed;
 
 public:
@@ -45,7 +45,7 @@ public:
 
     operator Rover() const { return std::move(rover); }
 
-    RoverBuilder& program_command(const char& id,const Action& action);
+    RoverBuilder& program_command(const char& id,const Action* action);
 
     RoverBuilder& add_sensor(std::unique_ptr<Sensor> ptr);
 
