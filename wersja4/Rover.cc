@@ -2,7 +2,7 @@
 
 
 RoverBuilder& RoverBuilder::program_command(const char &id, std::shared_ptr<Action> action) {
-    rover.actions_map.insert(std::make_pair(std::move(id),action));
+    actions_map.insert(std::make_pair(std::move(id),action));
     return *this;
 }
 
@@ -23,12 +23,12 @@ std::ostream& operator<<(std::ostream& os, const Rover& obj) {
               << get_name_dir(obj.dir) << ((obj.isStopped) ? " stopped" : "");
 }
 
-Rover& RoverBuilder::build() {
-    return rover;
+Rover RoverBuilder::build() {
+    return Rover(std::move(actions_map), std::move(sensors));
 }
 
 RoverBuilder& RoverBuilder::add_sensor(std::unique_ptr<Sensor> ptr) {
-    rover.sensors.push_back(std::move(ptr));
+    sensors.push_back(std::move(ptr));
     return *this;
 }
 
