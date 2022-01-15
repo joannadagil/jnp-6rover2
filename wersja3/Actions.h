@@ -1,6 +1,7 @@
 #pragma once
 #include <initializer_list>
 #include <memory>
+#include <vector>
 using coordinate_t = uint32_t;
 using position_t = std::pair<coordinate_t, coordinate_t>;
 
@@ -18,11 +19,6 @@ public:
     void execute(position_t &pos, position_t &dir) override {
         pos.first += dir.first;
         pos.second += pos.second;
-    }
-
-    static MoveForwardAction& get_singleton() {
-        static MoveForwardAction singleton;
-        return singleton;
     }
 
      ~MoveForwardAction() override = default;
@@ -44,10 +40,6 @@ public:
         pos.second -= pos.second;
     }
 
-    static MoveBackwardAction& get_singleton() {
-        static MoveBackwardAction singleton;
-        return singleton;
-    }
 
     ~MoveBackwardAction() override = default;
 };
@@ -67,11 +59,6 @@ public:
     void execute(position_t &pos, position_t &dir) override {
     }
 
-    static RotateLeftAction& get_singleton() {
-        static RotateLeftAction singleton;
-        return singleton;
-    }
-
     ~RotateLeftAction() override = default;
 };
 
@@ -89,11 +76,6 @@ public:
     void execute(position_t &pos, position_t &dir) override {
     }
 
-    static RotateRightAction& get_singleton() {
-        static RotateRightAction singleton;
-        return singleton;
-    }
-
     ~RotateRightAction() override = default;
 };
 
@@ -106,10 +88,13 @@ static std::shared_ptr<RotateRightAction> rotate_right() {
 
 class ComposeAction : public Action {
 private:
-
+    std::vector<std::shared_ptr<Action>> components;
 public:
-    ComposeAction(std::initializer_list<std::shared_ptr<Action>> list) {}
-    void execute(position_t &pos, position_t &dir) override {}
+    ComposeAction(std::initializer_list<std::shared_ptr<Action>> list) : components(list) {}
+    void execute(position_t &pos, position_t &dir) override {
+        for(auto action : components)
+            action->execute(pos, dir);
+    }
 
     ~ComposeAction() override = default;
 };
