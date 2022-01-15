@@ -5,15 +5,6 @@
 #include <vector>
 #include <unordered_map>
 
-namespace Direction {
-    constexpr position_t EAST = std::make_pair(1,0);
-    constexpr position_t WEST = std::make_pair(1,0);
-    constexpr position_t NORTH = std::make_pair(1,0);
-    constexpr position_t SOUTH = std::make_pair(1,0);
-
-}
-
-
 std::string get_name_dir(position_t dir);
 
 struct Sensor {

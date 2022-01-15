@@ -5,6 +5,14 @@
 using coordinate_t = uint32_t;
 using position_t = std::pair<coordinate_t, coordinate_t>;
 
+namespace Direction {
+    constexpr position_t EAST = std::make_pair(1,0);
+    constexpr position_t WEST = std::make_pair(-1,0);
+    constexpr position_t NORTH = std::make_pair(0,1);
+    constexpr position_t SOUTH = std::make_pair(0,-1);
+
+}
+
 class Action {
 public:
     virtual void execute(position_t &pos, position_t &dir) = 0;
@@ -40,7 +48,6 @@ public:
         pos.second -= pos.second;
     }
 
-
     ~MoveBackwardAction() override = default;
 };
 
@@ -57,6 +64,10 @@ private:
 public:
     RotateLeftAction() {}
     void execute(position_t &pos, position_t &dir) override {
+        if(dir == Direction::EAST) dir = Direction::NORTH;
+        else if(dir == Direction::NORTH) dir = Direction::WEST;
+        else if(dir == Direction::WEST) dir = Direction::SOUTH;
+        else if(dir == Direction::SOUTH) dir = Direction::EAST;
     }
 
     ~RotateLeftAction() override = default;
@@ -74,6 +85,10 @@ private:
 public:
     RotateRightAction() {}
     void execute(position_t &pos, position_t &dir) override {
+        if(dir == Direction::EAST) dir = Direction::SOUTH;
+        else if(dir == Direction::NORTH) dir = Direction::EAST;
+        else if(dir == Direction::WEST) dir = Direction::NORTH;
+        else if(dir == Direction::SOUTH) dir = Direction::WEST;
     }
 
     ~RotateRightAction() override = default;
