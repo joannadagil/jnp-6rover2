@@ -13,9 +13,20 @@ namespace Direction {
 
 }
 
+struct Sensor {
+    virtual bool is_safe([[maybe_unused]] coordinate_t x,
+                         [[maybe_unused]] coordinate_t y) {return false;}
+};
+
+class DangerDetected : public std::exception {
+    const char* what() const throw() {
+        return "One of the sensors detected danger";
+    }
+};
+
 class Action {
 public:
-    virtual void execute(position_t &pos, position_t &dir) = 0;
+    virtual void execute(position_t &pos, position_t &dir, const std::vector<std::unique_ptr<Sensor>> &sensors) = 0;
     virtual ~Action() = default;
 };
 
@@ -24,9 +35,13 @@ private:
     
 public:
     MoveForwardAction() {}
-    void execute(position_t &pos, position_t &dir) override {
+    void execute(position_t &pos, position_t &dir, const std::vector<std::unique_ptr<Sensor>> &sensors) override {
+        for(auto &sensor : sensors) {
+            if(!sensor->is_safe(pos.first + dir.first, pos.second + dir.second)) 
+                throw DangerDetected();
+        }
         pos.first += dir.first;
-        pos.second += pos.second;
+        pos.second += dir.second;
     }
 
      ~MoveForwardAction() override = default;
@@ -43,9 +58,13 @@ private:
     
 public:
     MoveBackwardAction() {}
-    void execute(position_t &pos, position_t &dir) override {
+    void execute(position_t &pos, position_t &dir, const std::vector<std::unique_ptr<Sensor>> &sensors) override {
+        for(auto &sensor : sensors) {
+            if(!sensor->is_safe(pos.first + dir.first, pos.second + dir.second)) 
+                throw DangerDetected();
+        }
         pos.first -= dir.first;
-        pos.second -= pos.second;
+        pos.second -= dir.second;
     }
 
     ~MoveBackwardAction() override = default;
@@ -63,7 +82,7 @@ private:
     
 public:
     RotateLeftAction() {}
-    void execute(position_t &pos, position_t &dir) override {
+    void execute(position_t &pos, position_t &dir, const std::vector<std::unique_ptr<Sensor>> &sensors) override {
         if(dir == Direction::EAST) dir = Direction::NORTH;
         else if(dir == Direction::NORTH) dir = Direction::WEST;
         else if(dir == Direction::WEST) dir = Direction::SOUTH;
@@ -84,7 +103,7 @@ private:
 
 public:
     RotateRightAction() {}
-    void execute(position_t &pos, position_t &dir) override {
+    void execute(position_t &pos, position_t &dir, const std::vector<std::unique_ptr<Sensor>> &sensors) override {
         if(dir == Direction::EAST) dir = Direction::SOUTH;
         else if(dir == Direction::NORTH) dir = Direction::EAST;
         else if(dir == Direction::WEST) dir = Direction::NORTH;
@@ -106,9 +125,9 @@ private:
     std::vector<std::shared_ptr<Action>> components;
 public:
     ComposeAction(std::initializer_list<std::shared_ptr<Action>> list) : components(list) {}
-    void execute(position_t &pos, position_t &dir) override {
+    void execute(position_t &pos, position_t &dir, const std::vector<std::unique_ptr<Sensor>> &sensors) override {
         for(auto action : components)
-            action->execute(pos, dir);
+            action->execute(pos, dir, sensors);
     }
 
     ~ComposeAction() override = default;
