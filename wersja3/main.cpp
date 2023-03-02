@@ -45,10 +45,11 @@ int main() {
     std::cout << rover << std::endl;
     rover.execute("FFBRLU");
     std::cout << rover << std::endl;
-    /*
+
 
     // Łazik zatrzymuje się, gdy napotka nieznaną komendę.
-    rover.execute("FXFFF");
+//    rover.execute("FXFFF");
+    rover.execute("F");
     std::cout << rover << std::endl;
 
     // Łazik wykonuje poprawne komendy.
@@ -63,5 +64,5 @@ int main() {
     broken_rover.land({-1, -1}, Direction::WEST);
     broken_rover.execute("X");
     std::cout << broken_rover << std::endl;
-     */
+
 }

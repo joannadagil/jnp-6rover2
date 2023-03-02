@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/students/inf/j/jd417531/jnp/6rover3/wersja3/Actions.h
+initializer_list
+-
+memory
+-
+vector
+-
+
+/home/students/inf/j/jd417531/jnp/6rover3/wersja3/Rover.h
+iostream
+-
+Actions.h
+/home/students/inf/j/jd417531/jnp/6rover3/wersja3/Actions.h
+memory
+-
+vector
+-
+unordered_map
+-
+
+/home/students/inf/j/jd417531/jnp/6rover3/wersja3/main.cpp
+iostream
+-
+Rover.h
+/home/students/inf/j/jd417531/jnp/6rover3/wersja3/Rover.h
+assert.h
+-
+

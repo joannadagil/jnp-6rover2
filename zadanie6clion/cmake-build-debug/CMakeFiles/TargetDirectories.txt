@@ -1,3 +1,0 @@
-/home/maciek/Dokumenty/MIMUW/sem_III/JNP I/zadanie6clion/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/maciek/Dokumenty/MIMUW/sem_III/JNP I/zadanie6clion/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/maciek/Dokumenty/MIMUW/sem_III/JNP I/zadanie6clion/cmake-build-debug/CMakeFiles/zadanie6clion.dir

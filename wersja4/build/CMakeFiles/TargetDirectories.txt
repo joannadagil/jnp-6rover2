@@ -1,0 +1,3 @@
+/home/students/inf/j/jd417531/jnp/6rover3/wersja4/build/CMakeFiles/rebuild_cache.dir
+/home/students/inf/j/jd417531/jnp/6rover3/wersja4/build/CMakeFiles/edit_cache.dir
+/home/students/inf/j/jd417531/jnp/6rover3/wersja4/build/CMakeFiles/zadanie6clion.dir

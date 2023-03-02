@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/zadanie6clion.dir/main.cpp.o CMakeFiles/zadanie6clion.dir/Rover.cc.o -o zadanie6clion 
